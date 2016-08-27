@@ -1,4 +1,6 @@
 #!/bin/bash
+while true
+do
 
 echo -e "
 	1 - Adicionar um usuário
@@ -45,3 +47,5 @@ case $OPT in
 *) echo "Escolha uma opção válida: 1|2|3"
 ;;
 esac
+
+done
