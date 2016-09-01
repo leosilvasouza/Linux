@@ -1,0 +1,10 @@
+To: leonardo.souza@easytaxi.com.br
+Subject: Log de monitoração
+
+Log de: Ter Ago 9 16:26:44 BRT 2016 
+
+Análise dos discos: 
+Filesystem 1K-blocks Used Available Use% Mounted on udev 4019456 0 4019456 0% /dev tmpfs 807716 9804 797912 2% /run /dev/sda2 701720984 253458504 412594000 39% / tmpfs 4038564 328760 3709804 9% /dev/shm tmpfs 5120 4 5116 1% /run/lock tmpfs 4038564 0 4038564 0% /sys/fs/cgroup cgmfs 100 0 100 0% /run/cgmanager/fs tmpfs 807716 72 807644 1% /run/user/1000 
+
+Usuários logados: 
+ 16:26:44 up 3:42, 4 users, load average: 0,39, 0,68, 0,70 USER TTY FROM LOGIN@ IDLE JCPU PCPU WHAT lsouza tty7 :0 12:45 3:42m 10:51 6.04s /sbin/upstart --user lsouza pts/0 :0 12:59 57.00s 0.17s 0.04s ssh rcvault lsouza pts/2 :0 13:02 1:32m 0.68s 0.44s vim monitoring.sh lsouza pts/16 :0 14:00 2.00s 0.11s 0.00s /bin/bash ./osmonitor.sh.
