@@ -1,0 +1,2 @@
+#!/bin/bash
+rdesktop -g 900x700 172.16.0.6
