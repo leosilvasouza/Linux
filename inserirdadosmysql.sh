@@ -8,7 +8,7 @@ fi
 usuario=$1
 senha=$2
  
-mysql -u root -ppea881tour384 -e "use sftpdb;
+mysql -u root -pPASSWORD -e "use sftpdb;
   
 insert into rcvault (user,password) values ('$usuario','$senha');"
  
