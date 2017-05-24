@@ -1,3 +1,4 @@
 # Linux
-Estudando linux
-Varios comando do dia a dia no linux pra automatizar o seu dia a dia.
+Estudando linux;
+Nível iniciante;
+Vários comando e testes do que esses comandos são capazes
