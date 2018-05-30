@@ -1,0 +1,44 @@
+#!/bin/bash
+#Script pra gerar um dump de todos os databases MySQL
+
+# Variaveis
+
+START="$(date)"
+NOW="$(date +"%d-%m-%Y-%H%M")"
+
+exec 1>> /data/mysql.backup/logs/backup_$NOW.log 2>&1
+
+CLEAR_DATA="+07"
+DIRECTORY_BIN="/usr/bin"
+DIRECTORY_BACKUP="/data/mysql.backup/backups"
+DIRECTORY_BACKUP_LOG="/data/mysql.backup/logs"
+
+USER="root"                             # USERNAME
+PASS="senhasenha"         # Hostname
+HOST="localhost"
+
+#### Remove arquivos de log com data de criacao superior a 20 dias.
+find $DIRECTORY_BACKUP_LOG -name "*.log" -ctime $CLEAR_DATA -exec rm -vf {} \; > $DIRECTORY_BACKUP_LOG/log_excluidos.log
+
+#### Remove arquivos de backup com data de criaç superior a 30 dias.
+find $DIRECTORY_BACKUP -name "*.gz" -ctime $CLEAR_DATA -exec rm -vf {} \; > $DIRECTORY_BACKUP_LOG/dmp_excluidos.log
+
+databases=`mysql --user=$USER --password=$PASS -h $HOST -e "SHOW DATABASES;" | tr -d "| " | grep -v Database`
+
+for db in $databases; do
+    if [[ "$db" != "information_schema" ]] && [[ "$db" != _* ]] ; then
+        echo "Dumping database: $db"
+        #mysqldump --force --opt --user=$USER --password=$PASSWORD --databases $db > $OUTPUT/`date +%Y%m%d`.$db.sql
+        $DIRECTORY_BIN/mysqldump --opt --routines --verbose -u $USER --password=$PASS -h $HOST  $db | gzip > $DIRECTORY_BACKUP/mansist_"$db"_"$NOW".gz
+
+        fi
+done
+
+
+echo "Enviando ao S3: $db"
+/usr/bin/aws s3 sync  /data/mysql.backup/ s3://bkpmansistded/mysql/
+
+
+END="$(date +"%d-%m-%Y-%H%M")"
+
+exit
