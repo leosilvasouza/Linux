@@ -1,0 +1,33 @@
+#!/bin/bash
+
+echo "---------------------------------------- -----------------------------------------------"
+hostname
+echo "---------------------------------------- -----------------------------------------------"
+
+cat /etc/os-release | grep rhel
+release=$?
+if [$release -eq 0]
+release='rhel'
+else
+release='debian'
+if [[ "$release" == rhel ]]
+    then
+        #Para RedHat
+        echo "----------------------------Pacotes instalados e Aplicações-------------------------------------"
+        yum check-update
+            if [ $? -eq 0 ]
+            then
+            echo "------------------------------------- FIM redhat--------------------------------------------" 
+            else
+            echo "Falha na criacao do Relatório em ambiente Red Hat"
+            fi
+    else
+        # Para debian
+        apt-get --just-print upgrade 2>&1 | perl -ne 'if (/Inst\s([\w,\-,\d,\.,~,:,\+]+)\s\[([\w,\-,\d,\.,~,:,\+]+)\]\s\(([\w,\-,\d,\.,~,:,\+]+)\)? /i) {print "PROGRAM: $1 INSTALLED: $2 AVAILABLE: $3\n"}'
+            if [ $? -eq 0 ]
+            then
+            echo "------------------------------------- FIM Debian --------------------------------------------" 
+            else
+            echo "Falha na criacao do Relatório em ambiente Debian"
+            fi    
+fi
